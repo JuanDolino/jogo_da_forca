@@ -21,7 +21,7 @@ palavra = str(input("Digite a palavra a ser descoberta: ")).strip().lower()
 letrasDescobertas = []
 letrasEscritas = []
 tentativas = 0
-acertos = -1
+acertos = 0
 
 #Lista com o boneco em várias posições.
 
@@ -100,6 +100,7 @@ for i in palavra:
 clear()
 
 while acertos != len(palavra) or tentativas != 6:
+
     if acertos == len(palavra):
         clear()
         print(f"Parabéns, você venceu !\n\nA palavra era {palavra}")
@@ -118,7 +119,7 @@ while acertos != len(palavra) or tentativas != 6:
     for i in letrasDescobertas:
         print(i, end=' ')
 
-    palpite = str(input("\nQual o seu palpite ?")).strip()
+    palpite = str(input("\nQual o seu palpite ? ")).strip()
 
     # While criado para evitar erros
 
@@ -126,45 +127,49 @@ while acertos != len(palavra) or tentativas != 6:
         if palpite in letrasEscritas:
         
             print("Essa letra já foi escrita, por favor tente novamente!")
-            palpite = str(input("\n\nQual o seu palpite ?")) 
+            palpite = str(input("\n\nQual o seu palpite ? ")) 
         
         if len(palpite) > 1 or len(palpite) == 0:
             
             print("Por favor, escreva apenas uma letra")
-            palpite = str(input("\n\nQual o seu palpite ?")) 
+            palpite = str(input("\n\nQual o seu palpite ? ")) 
 
         if palpite.isdigit() == True:
         
             print("Isso não é uma letra, por favor digite apenas letras.")
-            palpite = str(input("\n\nQual o seu palpite ?")) 
+            palpite = str(input("\n\nQual o seu palpite ? ")) 
 
     letrasEscritas.append(palpite)
     palpite.lower()
 
     if palpite in palavra:
         if palavra.count(palpite) > 1:
-            positionPalpite = palavra.index(palpite)
 
-            for i in range(0, palavra.count(palpite)+1):
-                
+            positionPalpite = palavra.index(palpite)
+            letrasRepetidasDescobertas = 0
+
+            while letrasRepetidasDescobertas < palavra.count(palpite):
                 # A váriavel position primeiro procura a posição do palpite da pessoa na lista
                 # Quando ele achar a posição ele vai somar com o tamanho da lista, de 0 ate a posição do palpite
 
                 position = palavra[positionPalpite:].index(palpite) + len(palavra[0:positionPalpite])
                 
-                # Aqui ele adiciona mais 1 a variavel positionPalpite, para que ele procure a próxima posição.
-                
-                positionPalpite+=1
-                
+                if letrasDescobertas[position] == "_":
+                 	letrasRepetidasDescobertas+=1
+                 	acertos+=1
+
                 # Adiciona o palpite a lista.
 
                 letrasDescobertas[position] = palpite
-                acertos+=1
-
+               
+                # Aqui ele adiciona mais 1 a variavel positionPalpite, para que ele procure a próxima posição.
+                
+                positionPalpite += 1
+   
         else:
             acertos+=1
             letrasDescobertas[palavra.index(palpite)] = palpite
     else:
         tentativas+=1
-
     clear()
+
