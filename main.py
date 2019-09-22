@@ -95,7 +95,11 @@ listaBoneco = [
 
 
 for i in palavra:
-    letrasDescobertas.append("_")
+    if i != " ":
+        letrasDescobertas.append("_")
+    else:
+        letrasDescobertas.append("-")
+        acertos+=1
 
 clear()
 
@@ -103,13 +107,13 @@ while acertos != len(palavra) or tentativas != 6:
 
     if acertos == len(palavra):
         clear()
-        print(f"Parabéns, você venceu !\n\nA palavra era {palavra}")
+        print(f'Parabéns, você venceu !\n\nA palavra era "{palavra.title()}"')
         break
 
     if tentativas == 6:
         print(listaBoneco[tentativas])
 
-        print(f'\nVocê perdeu !!\nA palavra certa era "{palavra}" ')
+        print(f'\nVocê perdeu !!\nA palavra certa era "{palavra.title()}" ')
         sleep(1)
         break
     print(f"Letras já escritas: {letrasEscritas}\n\n")
